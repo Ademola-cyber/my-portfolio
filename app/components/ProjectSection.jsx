@@ -1,13 +1,17 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import ProjectCard from "./ProjectCard";
+import ProjectTag from "./ProjectTag";
 
-const projectData = [
+const projectsData = [
   {
     id: 1,
     title: "React Portfolio Website",
     description: "Project 1 Description",
     image: "/1.png",
-    tag: ["All", "web"],
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 
   {
@@ -15,7 +19,9 @@ const projectData = [
     title: "Photography Portfolio Website",
     description: "Project 2 Description",
     image: "/2.png",
-    tag: ["All", "web"],
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 
   {
@@ -23,7 +29,9 @@ const projectData = [
     title: "E-commerce Application",
     description: "Project 3 Description",
     image: "/3.png",
-    tag: ["All", "web"],
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 
   {
@@ -32,6 +40,8 @@ const projectData = [
     description: "Project 4 Description",
     image: "/4.png",
     tag: ["All", "Mobile"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 
   {
@@ -39,7 +49,9 @@ const projectData = [
     title: "React Firebase Template",
     description: "Authentication and CRUD operations",
     image: "/5.png",
-    tag: ["All", "web"],
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 
   {
@@ -47,22 +59,53 @@ const projectData = [
     title: "Full-stack Roadmap",
     description: "Project 5 Description",
     image: "/6.png",
-    tag: ["All", "web"],
+    tag: ["All", "Web"],
+    gitUrl: "/",
+    previewUrl: "/",
   },
 ];
 
 const ProjectSection = () => {
+  const [tag, setTag] = useState("All");
+
+  const handleTagChange = (newTag) => {
+    setTag(newTag);
+  };
+
+  const filteredProjects = projectsData.filter((project) => (
+    project.tag.includes(tag)
+  ));
+
   return (
     <>
-      <h2>My Projects</h2>
-      <div className="">
-        {projectData.map((project) => (
+      <h2 className="text-center text-4xl font-bold mt-4">My Projects</h2>
+      <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
+        <ProjectTag
+          onClick={handleTagChange}
+          name="All"
+          isSelected={tag === "All"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="Web"
+          isSelected={tag === "Web"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="Mobile"
+          isSelected={tag === "Mobile"}
+        />
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+        {filteredProjects.map((project) => (
           <ProjectCard
             key={project.id}
             title={project.title}
             description={project.description}
             imgUrl={project.image}
-            tags={project}
+            gitUrl={project.gitUrl}
+            previewUrl={project.previewUrl}
           />
         ))}
       </div>
